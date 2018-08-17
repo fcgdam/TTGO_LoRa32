@@ -58,7 +58,7 @@ const lmic_pinmap lmic_pins = {
 
 void do_send(osjob_t* j){
     // Payload to send (uplink)
-    static uint8_t message[] = "Hello OTTA!";
+    static uint8_t message[] = "Hello OTAA!";
 
     // Check if there is not a current TX/RX job running
     if (LMIC.opmode & OP_TXRXPEND) {
@@ -117,7 +117,7 @@ void onEvent (ev_t ev) {
             break;
         case EV_JOINING:
             Serial.println(F("EV_JOINING: -> Joining..."));
-            display.drawString(0,16 , "OTTA joining....");
+            display.drawString(0,16 , "OTAA joining....");
             display.display();
             break;
         case EV_JOINED: {
