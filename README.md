@@ -2,9 +2,9 @@
 
 This repository holds some sample code, using platformio IDE, for using this board peripherals:
 
- Lora - Use the sx127x radio to connect to the TheThingsNetwork
- BLE  - Esp32 Bluetooth 
- WIFI - Native WIFI
+ - Lora - Use the sx127x radio to connect to the TheThingsNetwork
+ - BLE  - Esp32 Bluetooth 
+ - WIFI - Native WIFI
 
 The following examples are on this repository:
 
