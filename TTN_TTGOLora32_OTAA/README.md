@@ -6,4 +6,4 @@ The information from the TTN console must be copied to the src/main.c file as re
 
 Example of the data that must be copied from the console. Please note the difference between LSB and MSB formats for the keys.
 
-![TTN Console Data](../images/OTAA_parameters.jpg?raw=true "TTN Console Data")
+![TTN Console Data](../images/OTAA_parameters.png?raw=true "TTN Console Data")
