@@ -25,9 +25,9 @@ SSD1306 display (OLED_I2C_ADDR, OLED_SDA, OLED_SCL);
  * TODO: Change the following keys
  * NwkSKey: network session key, AppSKey: application session key, and DevAddr: end-device address
  *************************************/
-static u1_t NWKSKEY[16] = { .... };  // Paste here the key in MSB format
+static u1_t NWKSKEY[16] = { ... };  // Paste here the key in MSB format
 
-static u1_t APPSKEY[16] = { .... };  // Paste here the key in MSB format
+static u1_t APPSKEY[16] = { ... };  // Paste here the key in MSB format
 
 static u4_t DEVADDR = 0x00000000;   // Put here the device id in hexadecimal form.
 
@@ -106,18 +106,18 @@ void onEvent (ev_t ev) {
 
 int getChipRevision()
 {
-  return (REG_READ(EFUSE_BLK0_RDATA3_REG) >> (EFUSE_RD_CHIP_VER_RESERVE_S)&&EFUSE_RD_CHIP_VER_RESERVE_V) ;
+  return (REG_READ(EFUSE_BLK0_RDATA3_REG) >> (EFUSE_RD_CHIP_VER_REV1_S)&&EFUSE_RD_CHIP_VER_REV1_V) ;
 }
 
 void printESPRevision() {
-  Serial.print("REG_READ(EFUSE_BLK0_RDATA3_REG) ");
+  Serial.print("REG_READ(EFUSE_BLK0_RDATA3_REG): ");
   Serial.println(REG_READ(EFUSE_BLK0_RDATA3_REG), BIN);
 
-  Serial.print("EFUSE_RD_CHIP_VER_RESERVE_S ");
-  Serial.println(EFUSE_RD_CHIP_VER_RESERVE_S, BIN);
+  Serial.print("EFUSE_RD_CHIP_VER_REV1_S: ");
+  Serial.println(EFUSE_RD_CHIP_VER_REV1_S, BIN);
 
-  Serial.print("EFUSE_RD_CHIP_VER_RESERVE_V ");
-  Serial.println(EFUSE_RD_CHIP_VER_RESERVE_V, BIN);
+  Serial.print("EFUSE_RD_CHIP_VER_REV1_V: ");
+  Serial.println(EFUSE_RD_CHIP_VER_REV1_V, BIN);
 
   Serial.println();
 
