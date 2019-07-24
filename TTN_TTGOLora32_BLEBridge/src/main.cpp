@@ -182,18 +182,18 @@ void onEvent (ev_t ev) {
 
 int getChipRevision()
 {
-  return (REG_READ(EFUSE_BLK0_RDATA3_REG) >> (EFUSE_RD_CHIP_VER_RESERVE_S)&&EFUSE_RD_CHIP_VER_RESERVE_V) ;
+  return (REG_READ(EFUSE_BLK0_RDATA3_REG) >> (EFUSE_RD_CHIP_VER_REV1_S)&&EFUSE_RD_CHIP_VER_REV1_V) ;
 }
 
 void printESPRevision() {
-  Serial.print("REG_READ(EFUSE_BLK0_RDATA3_REG) ");
+  Serial.print("REG_READ(EFUSE_BLK0_RDATA3_REG): ");
   Serial.println(REG_READ(EFUSE_BLK0_RDATA3_REG), BIN);
 
-  Serial.print("EFUSE_RD_CHIP_VER_RESERVE_S ");
-  Serial.println(EFUSE_RD_CHIP_VER_RESERVE_S, BIN);
+  Serial.print("EFUSE_RD_CHIP_VER_REV1_S: ");
+  Serial.println(EFUSE_RD_CHIP_VER_REV1_S, BIN);
 
-  Serial.print("EFUSE_RD_CHIP_VER_RESERVE_V ");
-  Serial.println(EFUSE_RD_CHIP_VER_RESERVE_V, BIN);
+  Serial.print("EFUSE_RD_CHIP_VER_REV1_V: ");
+  Serial.println(EFUSE_RD_CHIP_VER_REV1_V, BIN);
 
   Serial.println();
 
