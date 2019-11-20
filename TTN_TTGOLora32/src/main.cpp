@@ -2,6 +2,7 @@
 // https://github.com/gonzalocasas/arduino-uno-dragino-lorawan/blob/master/LICENSE
 // Based on examples from https://github.com/matthijskooijman/arduino-lmic
 // Copyright (c) 2015 Thomas Telkamp and Matthijs Kooijman
+// Modified by github FGCDAM user https://github.com/fcgdam
 
 #include <Arduino.h>
 #include "lmic.h"
@@ -92,6 +93,7 @@ void onEvent (ev_t ev) {
           display.drawString (0, 20, "Received DATA.");
           for ( i = 0 ; i < LMIC.dataLen ; i++ )
             TTN_response[i] = LMIC.frame[LMIC.dataBeg+i];
+
           TTN_response[i] = 0;
           display.drawString (0, 32, String(TTN_response));
         }
@@ -140,25 +142,57 @@ void setup() {
     pinMode(LEDPIN,OUTPUT);
 
    // reset the OLED
-   pinMode(OLED_RESET,OUTPUT);
-   digitalWrite(OLED_RESET, LOW);
-   delay(50);
-   digitalWrite(OLED_RESET, HIGH);
+    pinMode(OLED_RESET,OUTPUT);
+    digitalWrite(OLED_RESET, LOW);
+    delay(50);
+    digitalWrite(OLED_RESET, HIGH);
 
-   display.init ();
-   display.flipScreenVertically ();
-   display.setFont (ArialMT_Plain_10);
+    display.init ();
+    display.flipScreenVertically ();
+    display.setFont (ArialMT_Plain_10);
 
-   display.setTextAlignment (TEXT_ALIGN_LEFT);
+    display.setTextAlignment (TEXT_ALIGN_LEFT);
 
-   display.drawString (0, 0, "Init!");
-   display.display ();
+    display.drawString (0, 0, "Init!");
+    display.display ();
+    
+    if ( DEVADDR == 0x00 )   {  // Device is misconfigured with an invalid or not defined device id.
+        int i = 0;
+
+        while ( true ) {
+            display.clear();
+            display.drawString (0, 0, "INIT FAILED! ");
+            display.drawString (0, 9, "Device ID is not SET!");
+          
+            display.drawString (0, 18, "Invalid TTN settings!");
+            display.drawString (0, 27, "Set NWSKEY and APPSKEY!");
+        
+            display.drawString( 0, 36, "Correct and reset.");
+
+            display.drawString( 0, 45, "Waiting for user action...");
+            if ( i == 0 )
+                display.drawString( 0, 54, "." );
+            else 
+                display.drawString( 0, 54, "*" );
+            i++; 
+            i = i % 2; 
+            display.display ();
+            delay( 1000 );
+        }
+
+    }
 
     // LMIC init
     os_init();
 
+    display.drawString (0, 8, "LMIC was initiated!");
+    display.display ();
+
     // Reset the MAC state. Session and pending data transfers will be discarded.
     LMIC_reset();
+
+    display.drawString (0, 16, "LMIC reset -> OK!");
+    display.display ();
 
     // Set up the channels used by the Things Network, which corresponds
     // to the defaults of most gateways. Without this, only three base
@@ -181,6 +215,9 @@ void setup() {
     // devices' ping slots. LMIC does not have an easy way to define set this
     // frequency and support for class B is spotty and untested, so this
     // frequency is not configured here.
+    display.drawString (0, 24, "LMIC setChannels -> OK!");
+    display.display ();
+
 
     // Set static session parameters.
     LMIC_setSession (0x1, DEVADDR, NWKSKEY, APPSKEY);
@@ -194,6 +231,19 @@ void setup() {
     // Set data rate and transmit power for uplink (note: txpow seems to be ignored by the library)
     //LMIC_setDrTxpow(DR_SF11,14);
     LMIC_setDrTxpow(DR_SF9,14);
+
+    display.drawString (0, 32, "LMIC setup -> OK!");
+    display.display ();
+
+    for ( int i = 0 ; i < 5 ; i++ ) {
+        delay ( 1000 );
+        
+        display.drawString (0+i*8, 50, ".");
+        display.display ();
+    }
+
+    Serial.println("LMIC setup done.");
+    Serial.println("Starting transmit job.");
 
     // Start job
     do_send(&sendjob);
